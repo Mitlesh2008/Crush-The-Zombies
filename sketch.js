@@ -9,10 +9,12 @@ const Composite = Matter.Composite;
 
 let engine;
 let world;
-var ground, bridge;
+var ground, bridge,endBridge;
 var leftWall, rightWall;
 var jointPoint;
+var endPoint;
 var jointLink;
+var bridgeLink;
 
 var stones = [];
 
@@ -23,32 +25,51 @@ function setup() {
   frameRate(80);
 
   ground = new Base(0, height - 10, width * 2, 20, "#795548", true);
-  leftWall = new Base(300, height / 2 + 50, 600, 100, "#8d6e63", true);
-  rightWall = new Base(width - 300, height / 2 + 50, 600, 100, "#8d6e63", true);
+  leftWall = new Base(1, height / 2 + 50, 600, 100, "#8d6e63", true);
+  rightWall = new Base(width - 1, height / 2 + 50, 600, 100, "#8d6e63", true);
 
-  bridge = new Base(15, { x: width / 2 - 400, y: height / 2 });
+  bridge = new Base(10, { x: width / 2 - 400, y: height / 2 });
   jointPoint = new Base(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
 
-  bridge = new Bridge(15, { x: width / 2 - 400, y: height / 2 });
+  bridge = new Bridge(10, { x: width / 2 - 400, y: height / 2 });
   jointPoint = new Base(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
 
-  bridge = new Base(15, { x: width / 2 - 400, y: height / 2 });
+  bridge = new Base(10, { x: width / 2 - 400, y: height / 2 });
   jointPoint = new Bridge(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
 
-  bridge = new Bridge(15, { x: width / 2 - 400, y: height / 2 });
+  bridge = new Bridge(10, { x: width / 2 - 400, y: height / 2 });
   jointPoint = new Bridge(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
 
-  
+  endBridge = new Base(10, { x: 1062, y: height / 2 });
+  endPoint = new Base(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
+
+  endBridge = new Bridge(10, { x: 1062, y: height / 2 });
+  endPoint = new Base(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
+
+  endBridge = new Base(10, { x: 1062, y: height / 2 });
+  endPoint = new Bridge(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
+
+  endBridge = new Bridge(10,{ x: 1062, y: height / 2 });
+  endPoint = new Bridge(width - 600, height / 2 + 10, 40, 20, "#8d6e63", true);
+
   Matter.Composite.add(bridge.body, jointPoint);
 
-  Matter.Composite.add(jointPoint);
+  Matter.Composite.add(bridge.body,jointPoint);
   
-  Matter.Composite.add(jointPoint, bridge.body);
+  Matter.Composite.add(bridge.body,jointPoint);
   
-  Matter.Composite.add(bridge.body);
+  Matter.Composite.add(bridge.body,jointPoint);
 
+  Matter.Composite.add(endBridge.body,endPoint);
 
-  jointLink = new Link(bridge, jointPoint);
+  Matter.Composite.add(endBridge.body,endPoint);
+  
+  Matter.Composite.add(endBridge.body,endPoint);
+  
+  Matter.Composite.add(endBridge.body,endPoint);
+
+  jointLink = new Link(jointPoint,bridge.body);
+  jointLink = new Link(endPoint,endBridge.body);
 
   for (var i = 0; i <= 8; i++) {
     var x = random(width / 2 - 200, width / 2 + 300);
@@ -64,10 +85,13 @@ function draw() {
 
   ground.show();
   bridge.show();
+  endBridge.show();
   leftWall.show();
   rightWall.show();
 
   for (var stone of stones) {
     stone.show();
   }
+// text (mouseX+","+mouseY,mouseX,mouseY);
 }
+
